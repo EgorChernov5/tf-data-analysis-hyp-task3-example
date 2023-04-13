@@ -1,14 +1,12 @@
 import pandas as pd
 import numpy as np
-from scipy.stats import mannwhitneyu
+from scipy.stats import ttest_ind
 
-chat_id = 1107380406 # Ваш chat ID, не меняйте название переменной
+chat_id = 1107380406
 
-SGN_LVL = 0.02
-
-def solution(x: np.array, y: np.array) -> bool:
-    pval = mannwhitneyu(x, y, alternative="less").pvalue
-    if pval < SGN_LVL:
+def solution(control_sample, test_sample) -> bool:
+    t, p = ttest_ind(test_sample, control_sample)
+    alpha = 0.02
+    if p < alpha:
         return True
-    # true: выборки не равны
     return False
